@@ -78,6 +78,7 @@ export default function PromptCard({
             src={image_url.replace(/\[.*\]\((.*)\)/, '$1')}
             alt={title}
             fill
+            sizes="(max-width: 639px) calc(100vw - 48px), (max-width: 1023px) calc((100vw - 72px) / 2), (max-width: 1399px) calc((100vw - 96px) / 3), 435px"
             className="object-cover"
             style={{ transition: 'transform 0.4s ease', transform: hovered ? 'scale(1.06)' : 'scale(1)' }}
           />

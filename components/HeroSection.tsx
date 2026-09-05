@@ -101,7 +101,7 @@ export default function HeroSection() {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           style={{
-            flex: 1, background: 'transparent', border: 'none', outline: 'none',
+            flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none',
             color: '#f0f0ff', fontSize: '0.95rem', fontFamily: 'inherit',
           }}
         />
@@ -110,6 +110,7 @@ export default function HeroSection() {
           style={{
             background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)',
             color: '#fff', border: 'none', borderRadius: 50,
+            flexShrink: 0,
             padding: '10px 28px', fontWeight: 700, fontSize: '0.9rem',
             cursor: 'pointer', transition: 'all 0.2s ease', fontFamily: 'inherit',
             boxShadow: '0 4px 12px rgba(139,92,246,0.4)',

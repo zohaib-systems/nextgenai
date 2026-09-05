@@ -1,4 +1,3 @@
-"use client";
 import Link from 'next/link';
 
 export default function ExploreCTA() {
@@ -44,7 +43,7 @@ export default function ExploreCTA() {
           Browse our entire collection of hand-picked AI prompts across writing, coding, marketing, and more.
         </p>
         <Link href="/library" style={{ textDecoration: 'none' }}>
-          <button style={{
+          <button className="explore-button" style={{
             background: 'linear-gradient(135deg, #7c3aed, #8b5cf6, #06b6d4)',
             color: '#fff', border: 'none', borderRadius: 50,
             padding: '14px 40px', fontWeight: 700, fontSize: '1rem',
@@ -52,8 +51,6 @@ export default function ExploreCTA() {
             boxShadow: '0 0 24px rgba(139,92,246,0.4), 0 8px 24px rgba(0,0,0,0.4)',
             transition: 'all 0.25s ease',
           }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-3px)'; e.currentTarget.style.boxShadow = '0 0 40px rgba(139,92,246,0.6), 0 12px 32px rgba(0,0,0,0.5)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 0 24px rgba(139,92,246,0.4), 0 8px 24px rgba(0,0,0,0.4)'; }}
           >
             Explore Full Library →
           </button>
