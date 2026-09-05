@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { getAllPrompts } from '@/lib/supabase';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://prompt-library.vercel.app';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nextgenai.zhust.me';
 
   // Fetch all prompt IDs from Supabase
   const prompts = await getAllPrompts() || [];

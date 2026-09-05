@@ -15,7 +15,7 @@ export const metadata: Metadata = {
   description: "Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.",
   keywords: ["AI", "Prompts", "ChatGPT", "Midjourney", "Prompt Engineering"],
   authors: [{ name: "NextGenAI Team" }],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://prompt-library.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://nextgenai.zhust.me'),
   openGraph: {
     title: "NextGenAI – Prompt Library",
     description: "Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.",
