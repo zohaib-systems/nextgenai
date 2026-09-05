@@ -11,17 +11,7 @@ export default function PromptDetail({ prompt }: { prompt: Prompt }) {
   return (
     <section style={{ minHeight: '100vh', padding: '32px 24px 80px', maxWidth: 1200, margin: '0 auto' }}>
       {/* Back button */}
-      <Link href="/library"
-        style={{
-          display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(139,92,246,0.1)',
-          border: '1px solid rgba(139,92,246,0.2)',
-          borderRadius: 50, padding: '8px 20px',
-          color: '#a78bfa', fontWeight: 600, fontSize: '0.85rem',
-          cursor: 'pointer', marginBottom: 36, fontFamily: 'inherit',
-          transition: 'all 0.2s ease',
-        }}
-      >
+      <Link href="/library" className="btn-ghost" style={{ marginBottom: 36, alignSelf: 'flex-start' }}>
         <ArrowLeft size={15} />
         Back to Library
       </Link>

@@ -106,12 +106,10 @@ export default function LibraryClient({ prompts = [] }: Props) {
             />
             {query && (
               <button
+                type="button"
                 aria-label="Clear search"
                 onClick={() => { updateUrl('', category); }}
-                style={{
-                  minWidth: 44, minHeight: 44, flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer',
-                  color: '#6060a0', fontSize: '1.1rem', lineHeight: 1, padding: 0,
-                }}
+                className="btn-icon btn-icon-plain"
               >
                 ×
               </button>
@@ -126,16 +124,14 @@ export default function LibraryClient({ prompts = [] }: Props) {
               return (
                 <button
                   key={cat}
+                  type="button"
                   aria-pressed={active}
                   onClick={() => handleCategoryClick(cat)}
-                  className="btn-ghost"
-                  style={{
-                    borderRadius: 50,
-                    background: active ? c.active : 'rgba(255,255,255,0.05)',
-                    border: `1px solid ${active ? 'transparent' : 'rgba(255,255,255,0.08)'}`,
-                    color: active ? '#fff' : '#8888aa',
-                    boxShadow: active ? `0 0 16px ${c.border}` : 'none',
-                  }}
+                  className="btn-filter"
+                  style={active ? {
+                    background: c.active,
+                    boxShadow: `0 0 16px ${c.border}`,
+                  } : undefined}
                 >
                   {cat}
                 </button>

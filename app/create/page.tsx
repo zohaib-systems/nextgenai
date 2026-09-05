@@ -274,8 +274,8 @@ export default function CreatePromptPage() {
         <button
           type="submit"
           disabled={!passcode || submitting}
-          className={`min-h-[44px] w-full rounded-md font-semibold 
-            ${!passcode ? "cursor-not-allowed bg-zinc-700" : "bg-primary hover:bg-primary/90"}`}
+          className={`btn-primary w-full rounded-md ${!passcode ? "cursor-not-allowed opacity-55" : ""}`}
+          style={{ borderRadius: 8 }}
         >
           {submitting ? "Publishing..." : "Publish Prompt"}
         </button>
