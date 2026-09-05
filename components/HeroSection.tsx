@@ -2,7 +2,7 @@ export default function HeroSection() {
   return (
     <section style={{
       position: 'relative',
-      padding: '100px 24px 80px',
+      padding: '40px 24px 80px',
       textAlign: 'center',
       overflow: 'hidden',
     }}>
@@ -62,9 +62,9 @@ export default function HeroSection() {
       {/* Subtitle */}
       <p style={{
         fontSize: '1.15rem', color: '#9090b8', maxWidth: 560,
-        margin: '0 auto 48px', lineHeight: 1.7, fontWeight: 400,
+        margin: '0 auto 40px', lineHeight: 1.7, fontWeight: 400,
       }}>
-        Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.
+        Hand-picked prompts that help you write sharper, code faster, and create with confidence.
       </p>
 
       {/* Search */}
@@ -72,7 +72,7 @@ export default function HeroSection() {
         display: 'flex', maxWidth: 540, margin: '0 auto',
         background: 'rgba(14,14,31,0.8)',
         border: '1.5px solid rgba(139,92,246,0.2)',
-        borderRadius: 50, padding: '6px 6px 6px 22px',
+        borderRadius: 50, padding: '5px 5px 5px 22px',
         backdropFilter: 'blur(12px)',
         boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
         transition: 'all 0.25s ease',
@@ -88,34 +88,17 @@ export default function HeroSection() {
             color: '#f0f0ff', fontSize: '1rem', fontFamily: 'inherit',
           }}
         />
-        <button
-          type="submit"
-          style={{
-            background: 'linear-gradient(135deg, #7c3aed, #8b5cf6)',
-            color: '#fff', border: 'none', borderRadius: 50,
-            flexShrink: 0,
-            padding: '10px 28px', fontWeight: 700, fontSize: '0.9rem',
-            cursor: 'pointer', transition: 'all 0.2s ease', fontFamily: 'inherit',
-            boxShadow: '0 4px 12px rgba(139,92,246,0.4)',
-            letterSpacing: '0.02em',
-          }}
-        >
+        <button type="submit" className="btn-search">
           Search
         </button>
       </form>
 
-      {/* Stats row */}
-      <div style={{
-        display: 'flex', justifyContent: 'center', gap: 40, marginTop: 56,
-        flexWrap: 'wrap',
+      <p style={{
+        margin: '28px auto 0', maxWidth: 420,
+        fontSize: '0.95rem', color: '#7a7a9a', lineHeight: 1.6,
       }}>
-        {[['500+', 'Prompts'], ['10k+', 'Users'], ['50+', 'Categories']].map(([num, label]) => (
-          <div key={label} style={{ textAlign: 'center' }}>
-            <div style={{ fontSize: '1.6rem', fontWeight: 800, color: '#a78bfa' }}>{num}</div>
-            <div style={{ fontSize: '0.8rem', color: '#666699', letterSpacing: '0.1em', textTransform: 'uppercase', marginTop: 2 }}>{label}</div>
-          </div>
-        ))}
-      </div>
+        Find a prompt, copy it in one click, and get better results from any AI tool.
+      </p>
     </section>
   );
 }

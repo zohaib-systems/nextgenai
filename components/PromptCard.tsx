@@ -135,30 +135,14 @@ export default function PromptCard({
               <button
                 onClick={handleCopy}
                 aria-label="Copy prompt text"
-                style={{
-                  background: 'rgba(139,92,246,0.12)', border: '1px solid rgba(139,92,246,0.2)',
-                  borderRadius: 8, padding: '8px', cursor: 'pointer',
-                  minWidth: '44px', minHeight: '44px',
-                  color: '#a78bfa', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.25)'; e.currentTarget.style.color = '#c4b5fd'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(139,92,246,0.12)'; e.currentTarget.style.color = '#a78bfa'; }}
+                className="btn-icon"
               >
                 <Copy size={16} />
               </button>
               <button
                 onClick={handleShare}
                 aria-label="Share prompt link"
-                style={{
-                  background: 'rgba(6,182,212,0.1)', border: '1px solid rgba(6,182,212,0.2)',
-                  borderRadius: 8, padding: '8px', cursor: 'pointer',
-                  minWidth: '44px', minHeight: '44px',
-                  color: '#67e8f9', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  transition: 'all 0.2s',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(6,182,212,0.22)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(6,182,212,0.1)'; }}
+                className="btn-icon btn-icon-cyan"
               >
                 <Share2 size={16} />
               </button>

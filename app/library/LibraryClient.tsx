@@ -128,15 +128,13 @@ export default function LibraryClient({ prompts = [] }: Props) {
                   key={cat}
                   aria-pressed={active}
                   onClick={() => handleCategoryClick(cat)}
+                  className="btn-ghost"
                   style={{
-                    padding: '6px 18px', borderRadius: 50, fontSize: '0.82rem',
-                    fontWeight: 600, cursor: 'pointer', fontFamily: 'inherit',
-                    minHeight: 44,
+                    borderRadius: 50,
                     background: active ? c.active : 'rgba(255,255,255,0.05)',
                     border: `1px solid ${active ? 'transparent' : 'rgba(255,255,255,0.08)'}`,
                     color: active ? '#fff' : '#8888aa',
                     boxShadow: active ? `0 0 16px ${c.border}` : 'none',
-                    transition: 'all 0.2s ease',
                   }}
                 >
                   {cat}

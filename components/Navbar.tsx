@@ -26,7 +26,7 @@ export default function Navbar() {
             display: 'flex', alignItems: 'center', gap: 10,
             background: 'linear-gradient(135deg, rgba(15,10,40,0.9), rgba(22,12,55,0.9))',
             border: '1px solid rgba(139,92,246,0.4)',
-            borderRadius: 50, padding: '7px 18px',
+            borderRadius: 50, padding: '6px 16px',
             boxShadow: '0 0 18px rgba(139,92,246,0.25), 0 4px 16px rgba(0,0,0,0.4)',
             cursor: 'pointer',
           }}>
@@ -63,7 +63,7 @@ export default function Navbar() {
             { label: 'Library', href: '/library' },
           ].map(({ label, href }) => (
             <Link key={href} href={href} style={{ textDecoration: 'none' }}>
-              <span className="inline-block px-[14px] py-[6px] rounded-full text-[0.88rem] font-medium text-[#8888b0] transition-all duration-200 hover:text-[#c4b5fd] hover:bg-violet-500/10 min-w-[44px] min-h-[44px] flex items-center justify-center">
+              <span className="btn-nav">
                 {label}
               </span>
             </Link>

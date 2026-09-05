@@ -1,10 +1,19 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import { Lock } from "lucide-react";
+import { ImagePlus, Lock, X } from "lucide-react";
 
+const DEFAULT_IMAGE =
+  "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800";
+const MAX_BYTES = 5 * 1024 * 1024;
+const ALLOWED_TYPES = new Set([
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+]);
 
 export default function CreatePromptPage() {
   const router = useRouter();
@@ -12,12 +21,39 @@ export default function CreatePromptPage() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [promptText, setPromptText] = useState("");
-  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [category, setCategory] = useState("Writing");
-  const [tags, setTags] = useState(""); // comma‑separated string
+  const [tags, setTags] = useState("");
   const [passcode, setPasscode] = useState("");
   const [passcodeError, setPasscodeError] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!imageFile) {
+      setImagePreview(null);
+      return;
+    }
+    const url = URL.createObjectURL(imageFile);
+    setImagePreview(url);
+    return () => URL.revokeObjectURL(url);
+  }, [imageFile]);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0] ?? null;
+    e.target.value = "";
+    if (!file) return;
+
+    if (!ALLOWED_TYPES.has(file.type)) {
+      toast.error("Only JPEG, PNG, WebP, and GIF images are allowed");
+      return;
+    }
+    if (file.size > MAX_BYTES) {
+      toast.error("Image must be 5 MB or smaller");
+      return;
+    }
+    setImageFile(file);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,21 +62,35 @@ export default function CreatePromptPage() {
     if (submitting) return;
     setSubmitting(true);
     try {
-
-      // Prepare payload
       const tagsArray = tags
         .split(",")
         .map((t) => t.trim())
         .filter(Boolean);
 
-      const finalImage = imageUrl?.trim()
-        ? imageUrl.trim()
-        : "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800";
+      let finalImage = DEFAULT_IMAGE;
 
-      // Call server‑side API route for secure insertion
-      const response = await fetch('/api/prompts', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      if (imageFile) {
+        const form = new FormData();
+        form.append("passcode", passcode);
+        form.append("file", imageFile);
+
+        const uploadRes = await fetch("/api/upload", {
+          method: "POST",
+          body: form,
+        });
+        const uploadResult = await uploadRes.json();
+
+        if (!uploadRes.ok || !uploadResult.success) {
+          setPasscodeError(uploadRes.status === 401);
+          toast.error(uploadResult.error || "Image upload failed");
+          return;
+        }
+        finalImage = uploadResult.url as string;
+      }
+
+      const response = await fetch("/api/prompts", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           passcode,
           title,
@@ -55,20 +105,20 @@ export default function CreatePromptPage() {
       const result = await response.json();
       if (!response.ok || !result.success) {
         setPasscodeError(response.status === 401);
-        console.error('Create prompt error:', result.error);
-        toast.error(result.error || 'Failed to publish prompt');
+        console.error("Create prompt error:", result.error);
+        toast.error(result.error || "Failed to publish prompt");
         return;
       }
-      // result.data may contain inserted row(s)
+
       const newId = result.data?.[0]?.id;
-      toast.success('Prompt published successfully!');
+      toast.success("Prompt published successfully!");
       if (newId) {
         router.push(`/prompt/${newId}`);
       } else {
-        router.push('/library');
+        router.push("/library");
       }
     } catch {
-      toast.error('Unable to publish. Check your connection and try again.');
+      toast.error("Unable to publish. Check your connection and try again.");
     } finally {
       setSubmitting(false);
     }
@@ -117,19 +167,59 @@ export default function CreatePromptPage() {
             className="w-full rounded-md bg-zinc-800 p-3 text-base md:text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
+
         <div>
-          <label className="block mb-1 font-medium" htmlFor="imageUrl">
-            Image URL (optional)
+          <label className="block mb-1 font-medium" htmlFor="imageFile">
+            Cover image (optional)
           </label>
-          <input
-            id="imageUrl"
-            type="url"
-            value={imageUrl}
-            onChange={(e) => setImageUrl(e.target.value)}
-            placeholder="https://..."
-            className="w-full rounded-md bg-zinc-800 p-3 text-base md:text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-          />
+          <div className="rounded-md border border-zinc-700 bg-zinc-800 p-3">
+            {imagePreview ? (
+              <div className="relative overflow-hidden rounded-md">
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src={imagePreview}
+                  alt="Selected cover preview"
+                  className="h-44 w-full object-cover"
+                />
+                <button
+                  type="button"
+                  onClick={() => setImageFile(null)}
+                  className="absolute right-2 top-2 inline-flex min-h-[40px] min-w-[40px] items-center justify-center rounded-full bg-black/60 text-white hover:bg-black/80"
+                  aria-label="Remove selected image"
+                >
+                  <X size={16} />
+                </button>
+              </div>
+            ) : (
+              <label
+                htmlFor="imageFile"
+                className="flex cursor-pointer flex-col items-center justify-center gap-2 rounded-md border border-dashed border-zinc-600 px-4 py-8 text-center text-zinc-400 hover:border-violet-500/50 hover:text-zinc-200"
+              >
+                <ImagePlus size={22} />
+                <span className="text-sm font-medium">Upload image</span>
+                <span className="text-xs text-zinc-500">
+                  JPEG, PNG, WebP, or GIF · max 5 MB
+                </span>
+              </label>
+            )}
+            <input
+              id="imageFile"
+              type="file"
+              accept="image/jpeg,image/png,image/webp,image/gif"
+              onChange={handleImageChange}
+              className="sr-only"
+            />
+            {imageFile && (
+              <p className="mt-2 truncate text-xs text-zinc-400">
+                {imageFile.name} · {(imageFile.size / 1024).toFixed(0)} KB
+              </p>
+            )}
+          </div>
+          <p className="mt-1 text-sm text-zinc-400">
+            Uploads to Supabase Storage. If skipped, a default image is used.
+          </p>
         </div>
+
         <div>
           <label className="block mb-1 font-medium" htmlFor="category">
             Category
@@ -159,10 +249,10 @@ export default function CreatePromptPage() {
             className="w-full rounded-md bg-zinc-800 p-3 text-base md:text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
-        {/* Admin Passcode */}
+
         <div className="relative z-10">
-          <label className="block mb-1 font-medium flex items-center" htmlFor="adminPasscode">
-            <Lock className="w-4 h-4 mr-1" /> Admin Passcode
+          <label className="mb-1 flex items-center font-medium" htmlFor="adminPasscode">
+            <Lock className="mr-1 h-4 w-4" /> Admin Passcode
           </label>
           <input
             id="adminPasscode"
@@ -174,19 +264,20 @@ export default function CreatePromptPage() {
             value={passcode}
             onChange={(e) => setPasscode(e.target.value)}
             className={`w-full rounded-md p-3 text-base md:text-sm focus:outline-none focus:ring-2 
-              ${passcodeError ? "bg-red-900 border border-red-500 focus:ring-red-500" : "bg-zinc-800 focus:ring-primary"}`}
+              ${passcodeError ? "border border-red-500 bg-red-900 focus:ring-red-500" : "bg-zinc-800 focus:ring-primary"}`}
           />
-          <p id="passcode-help" className="text-sm text-zinc-400 mt-1" role={passcodeError ? "alert" : undefined}>
+          <p id="passcode-help" className="mt-1 text-sm text-zinc-400" role={passcodeError ? "alert" : undefined}>
             {passcodeError ? "Invalid admin passcode. Please try again." : "Required to publish new prompts."}
           </p>
         </div>
+
         <button
           type="submit"
           disabled={!passcode || submitting}
-          className={`w-full min-h-[44px] rounded-md font-semibold 
-            ${!passcode ? "bg-zinc-700 cursor-not-allowed" : "bg-primary hover:bg-primary/90"}`}
+          className={`min-h-[44px] w-full rounded-md font-semibold 
+            ${!passcode ? "cursor-not-allowed bg-zinc-700" : "bg-primary hover:bg-primary/90"}`}
         >
-          {submitting ? "Publishing?" : "Publish Prompt"}
+          {submitting ? "Publishing..." : "Publish Prompt"}
         </button>
       </form>
     </section>

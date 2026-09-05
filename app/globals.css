@@ -83,30 +83,151 @@ body {
   background-clip: text;
 }
 
-/* Glow button */
-.btn-primary {
+/* Buttons */
+.btn-primary,
+.btn-secondary,
+.btn-ghost,
+.btn-icon,
+.explore-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  text-decoration: none;
+  border-radius: 50px;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease,
+    box-shadow 0.2s ease, transform 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+.btn-primary:disabled,
+.btn-secondary:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.btn-primary,
+.explore-button {
+  background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+  color: #fff;
+  border: none;
+  padding: 10px 28px;
+  min-height: 44px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 4px 16px rgba(0, 0, 0, 0.35);
+}
+.btn-primary:hover:not(:disabled),
+.explore-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 32px rgba(139, 92, 246, 0.6), 0 8px 24px rgba(0, 0, 0, 0.45);
+}
+.btn-primary:active:not(:disabled),
+.explore-button:active {
+  transform: translateY(0);
+}
+
+.btn-secondary {
+  background: rgba(6, 182, 212, 0.12);
+  border: 1px solid rgba(6, 182, 212, 0.3);
+  color: #67e8f9;
+  padding: 10px 24px;
+  min-height: 44px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+.btn-secondary:hover:not(:disabled) {
+  background: rgba(6, 182, 212, 0.2);
+  border-color: rgba(6, 182, 212, 0.45);
+}
+
+.btn-ghost {
+  background: rgba(139, 92, 246, 0.1);
+  border: 1px solid rgba(139, 92, 246, 0.22);
+  color: #a78bfa;
+  padding: 8px 16px;
+  min-height: 40px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  border-radius: 10px;
+}
+.btn-ghost:hover {
+  background: rgba(139, 92, 246, 0.2);
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, 0.35);
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  padding: 0;
+  border-radius: 10px;
+  background: rgba(139, 92, 246, 0.12);
+  border: 1px solid rgba(139, 92, 246, 0.2);
+  color: #a78bfa;
+}
+.btn-icon:hover {
+  background: rgba(139, 92, 246, 0.25);
+  color: #c4b5fd;
+  border-color: rgba(139, 92, 246, 0.4);
+}
+.btn-icon-cyan {
+  background: rgba(6, 182, 212, 0.1);
+  border-color: rgba(6, 182, 212, 0.2);
+  color: #67e8f9;
+}
+.btn-icon-cyan:hover {
+  background: rgba(6, 182, 212, 0.22);
+  color: #67e8f9;
+  border-color: rgba(6, 182, 212, 0.4);
+}
+
+.btn-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  min-height: 40px;
+  border-radius: 999px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: #8888b0;
+  text-decoration: none;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+.btn-nav:hover {
+  color: #c4b5fd;
+  background: rgba(139, 92, 246, 0.1);
+}
+
+.btn-search {
+  flex-shrink: 0;
   background: linear-gradient(135deg, #7c3aed, #8b5cf6);
   color: #fff;
   border: none;
   border-radius: 50px;
-  padding: 12px 32px;
-  font-weight: 600;
-  font-size: 15px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 0 20px rgba(139, 92, 246, 0.4), 0 4px 16px rgba(0,0,0,0.4);
+  padding: 0 26px;
+  min-height: 42px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  font-family: inherit;
   letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
 }
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 0 32px rgba(139, 92, 246, 0.6), 0 8px 24px rgba(0,0,0,0.5);
+.btn-search:hover {
+  filter: brightness(1.08);
+  box-shadow: 0 6px 18px rgba(139, 92, 246, 0.55);
 }
-.btn-primary:active { transform: translateY(0); }
-
-/* Glass card */
-.explore-button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0 40px rgba(139,92,246,0.6), 0 12px 32px rgba(0,0,0,0.5) !important;
+.btn-search:active {
+  transform: scale(0.98);
 }
 
 .glass-card {

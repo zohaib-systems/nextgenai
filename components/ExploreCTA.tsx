@@ -42,17 +42,8 @@ export default function ExploreCTA() {
         <p style={{ color: '#9696b8', marginBottom: 32, fontSize: '1rem', lineHeight: 1.65 }}>
           Browse our entire collection of hand-picked AI prompts across writing, coding, marketing, and more.
         </p>
-        <Link href="/library" className="explore-button" style={{
-            display: 'inline-block', textDecoration: 'none',
-            background: 'linear-gradient(135deg, #7c3aed, #8b5cf6, #06b6d4)',
-            color: '#fff', border: 'none', borderRadius: 50,
-            padding: '14px 40px', fontWeight: 700, fontSize: '1rem',
-            cursor: 'pointer', fontFamily: 'inherit', letterSpacing: '0.02em',
-            boxShadow: '0 0 24px rgba(139,92,246,0.4), 0 8px 24px rgba(0,0,0,0.4)',
-            transition: 'all 0.25s ease',
-          }}
-          >
-            Explore Full Library →
+        <Link href="/library" className="explore-button" style={{ padding: '12px 36px', fontSize: '1rem' }}>
+          Explore Full Library →
         </Link>
       </div>
     </section>
