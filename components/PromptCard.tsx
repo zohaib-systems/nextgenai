@@ -51,7 +51,7 @@ export default function PromptCard({
   };
 
   return (
-    <Link href={`/prompt/${id}`} style={{ textDecoration: 'none' }}>
+    <article style={{ position: 'relative', height: '100%' }}>
       <div
         onMouseEnter={() => setHovered(true)}
         onMouseLeave={() => setHovered(false)}
@@ -109,10 +109,10 @@ export default function PromptCard({
             margin: 0, lineHeight: 1.35, wordBreak: 'break-word',
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}>
-            {title}
+            <Link className="card-link" href={`/prompt/${id}`}>{title}</Link>
           </h2>
           <p style={{
-            fontSize: '0.9rem', color: '#7070a0', margin: 0, lineHeight: 1.6, flex: 1, wordBreak: 'break-word',
+            fontSize: '0.9rem', color: '#9696b8', margin: 0, lineHeight: 1.6, flex: 1, wordBreak: 'break-word',
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
           }}>
             {description}
@@ -126,12 +126,12 @@ export default function PromptCard({
           }}>
             <span style={{
               display: 'flex', alignItems: 'center', gap: 4,
-              fontSize: '0.85rem', color: '#6060a0', fontWeight: 500,
+              fontSize: '0.85rem', color: '#9696b8', fontWeight: 500,
             }}>
               <ArrowRight size={14} />
               View prompt
             </span>
-            <div style={{ display: 'flex', gap: 6 }}>
+            <div style={{ display: 'flex', gap: 6, position: 'relative', zIndex: 1 }}>
               <button
                 onClick={handleCopy}
                 aria-label="Copy prompt text"
@@ -166,6 +166,6 @@ export default function PromptCard({
           </div>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

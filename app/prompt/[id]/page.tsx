@@ -1,15 +1,14 @@
 import { notFound } from "next/navigation";
-import { getPromptById, type Prompt } from "@/lib/supabase";
+import { getPromptById } from "@/lib/supabase";
 import PromptDetail from "@/components/PromptDetail";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
 export async function generateMetadata(
-  { params }: Props,
-  parent: ResolvingMetadata
+  { params }: Props
 ): Promise<Metadata> {
   const { id } = await params;
   const prompt = await getPromptById(id);
@@ -17,6 +16,7 @@ export async function generateMetadata(
   if (!prompt) {
     return {
       title: 'Prompt Not Found',
+      robots: { index: false, follow: true },
     };
   }
 
@@ -24,8 +24,10 @@ export async function generateMetadata(
 
   return {
     title: `${prompt.title} - NextGenAI Prompt Library`,
+    alternates: { canonical: `/prompt/${id}` },
     description: prompt.description,
     openGraph: {
+      url: `/prompt/${id}`,
       title: prompt.title,
       description: prompt.description,
       images: [{ url: cleanImageUrl }],
@@ -46,5 +48,5 @@ export default async function PromptDetailPage({ params }: Props) {
   if (!prompt) {
     notFound();
   }
-  return <PromptDetail prompt={prompt as Prompt} />;
+  return <PromptDetail prompt={prompt} />;
 }

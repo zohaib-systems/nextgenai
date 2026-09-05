@@ -1,3 +1,4 @@
+import { siteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -13,9 +14,8 @@ const inter = Inter({
 export const metadata: Metadata = {
   title: "NextGenAI – Prompt Library",
   description: "Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.",
-  keywords: ["AI", "Prompts", "ChatGPT", "Midjourney", "Prompt Engineering"],
   authors: [{ name: "NextGenAI Team" }],
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://nextgenai.zhust.me'),
+  metadataBase: new URL(siteUrl),
   openGraph: {
     title: "NextGenAI – Prompt Library",
     description: "Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: "NextGenAI",
     images: [
       {
-        url: "/images/og-image.png",
+        url: "/opengraph-image",
         width: 1200,
         height: 630,
         alt: "NextGenAI Prompt Library",
@@ -36,10 +36,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "NextGenAI – Prompt Library",
     description: "Discover the best AI Prompt Gems.",
-    images: ["/images/og-image.png"],
-  },
-  alternates: {
-    canonical: '/',
+    images: ["/opengraph-image"],
   },
 };
 
@@ -52,11 +49,12 @@ export default function RootLayout({
       className={`${inter.variable} h-full antialiased`}
     >
       <body style={{ minHeight: '100vh', display: 'flex', flexDirection: 'column', position: 'relative' }}>
+        <a className="skip-link" href="#main-content">Skip to content</a>
         <Navbar />
 
         {/* Page content offset for fixed nav */}
         <div style={{ paddingTop: 64, flex: 1 }}>
-          <main>
+          <main id="main-content" tabIndex={-1}>
             {children}
           </main>
         </div>

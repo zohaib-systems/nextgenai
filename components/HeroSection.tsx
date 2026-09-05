@@ -1,19 +1,4 @@
-"use client";
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
-
 export default function HeroSection() {
-  const router = useRouter();
-  const [query, setQuery] = useState('');
-  const [focused, setFocused] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (query.trim()) {
-      router.push(`/library?q=${encodeURIComponent(query.trim())}`);
-    }
-  };
-
   return (
     <section style={{
       position: 'relative',
@@ -83,26 +68,24 @@ export default function HeroSection() {
       </p>
 
       {/* Search */}
-      <form onSubmit={handleSubmit} style={{
+      <form action="/library" method="get" role="search" className="hero-search" style={{
         display: 'flex', maxWidth: 540, margin: '0 auto',
-        background: focused ? 'rgba(139,92,246,0.08)' : 'rgba(14,14,31,0.8)',
-        border: `1.5px solid ${focused ? 'rgba(139,92,246,0.6)' : 'rgba(139,92,246,0.2)'}`,
+        background: 'rgba(14,14,31,0.8)',
+        border: '1.5px solid rgba(139,92,246,0.2)',
         borderRadius: 50, padding: '6px 6px 6px 22px',
         backdropFilter: 'blur(12px)',
-        boxShadow: focused ? '0 0 32px rgba(139,92,246,0.2)' : '0 4px 24px rgba(0,0,0,0.3)',
+        boxShadow: '0 4px 24px rgba(0,0,0,0.3)',
         transition: 'all 0.25s ease',
         gap: 8,
       }}>
         <input
-          type="text"
+          type="search"
+          name="q"
+          aria-label="Search prompts"
           placeholder="Search prompts..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onFocus={() => setFocused(true)}
-          onBlur={() => setFocused(false)}
           style={{
             flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none',
-            color: '#f0f0ff', fontSize: '0.95rem', fontFamily: 'inherit',
+            color: '#f0f0ff', fontSize: '1rem', fontFamily: 'inherit',
           }}
         />
         <button
@@ -116,8 +99,6 @@ export default function HeroSection() {
             boxShadow: '0 4px 12px rgba(139,92,246,0.4)',
             letterSpacing: '0.02em',
           }}
-          onMouseEnter={e => (e.currentTarget.style.transform = 'scale(1.04)')}
-          onMouseLeave={e => (e.currentTarget.style.transform = 'scale(1)')}
         >
           Search
         </button>

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import PromptCard from "@/components/PromptCard";
 import { type Prompt } from "@/lib/supabase";
 import { Search } from "lucide-react";
@@ -20,12 +20,11 @@ const categoryColors: Record<string, { active: string; border: string }> = {
 };
 
 export default function LibraryClient({ prompts = [] }: Props) {
-  const router = useRouter();
   const searchParams = useSearchParams();
   const initialQuery = searchParams?.get("q") ?? "";
   const initialCat = searchParams?.get("category") ?? "All";
-  const [query, setQuery] = useState(initialQuery);
-  const [category, setCategory] = useState(initialCat);
+  const query = initialQuery;
+  const category = initialCat;
   const [focused, setFocused] = useState(false);
 
   const safePrompts = Array.isArray(prompts) ? prompts : [];
@@ -44,17 +43,15 @@ export default function LibraryClient({ prompts = [] }: Props) {
     const params = new URLSearchParams();
     if (q) params.set("q", q);
     if (cat && cat !== "All") params.set("category", cat);
-    router.replace(`/library?${params.toString()}`);
+    window.history.replaceState(null, "", `/library${params.size ? `?${params}` : ""}`);
   };
 
   const handleQueryChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const val = e.target.value;
-    setQuery(val);
     updateUrl(val, category);
   };
 
   const handleCategoryClick = (cat: string) => {
-    setCategory(cat);
     updateUrl(query, cat);
   };
 
@@ -69,14 +66,14 @@ export default function LibraryClient({ prompts = [] }: Props) {
         }}>
           Prompt Library
         </h1>
-        <p style={{ color: '#6666a0', fontSize: '1rem', margin: 0 }}>
+        <p style={{ color: '#9696b8', fontSize: '1rem', margin: 0 }}>
           {filtered.length} prompt{filtered.length !== 1 ? 's' : ''} found
         </p>
       </div>
 
       {/* Sticky search + filters */}
       <div style={{
-        position: 'sticky', top: 12, zIndex: 20, marginBottom: 36,
+        position: 'sticky', top: 76, zIndex: 20, marginBottom: 36,
       }}>
         <div style={{
           background: 'rgba(8,8,20,0.85)', backdropFilter: 'blur(20px)',
@@ -95,22 +92,24 @@ export default function LibraryClient({ prompts = [] }: Props) {
           }}>
             <Search size={16} style={{ color: '#6060a0', flexShrink: 0 }} />
             <input
-              type="text"
+              type="search"
+              aria-label="Search prompts by title, description, or content"
               placeholder="Search prompts by title, description, or content..."
               value={query}
               onChange={handleQueryChange}
               onFocus={() => setFocused(true)}
               onBlur={() => setFocused(false)}
               style={{
-                flex: 1, background: 'transparent', border: 'none', outline: 'none',
-                color: '#f0f0ff', fontSize: '0.9rem', fontFamily: 'inherit',
+                flex: 1, minWidth: 0, background: 'transparent', border: 'none', outline: 'none',
+                color: '#f0f0ff', fontSize: '1rem', fontFamily: 'inherit',
               }}
             />
             {query && (
               <button
-                onClick={() => { setQuery(''); updateUrl('', category); }}
+                aria-label="Clear search"
+                onClick={() => { updateUrl('', category); }}
                 style={{
-                  background: 'none', border: 'none', cursor: 'pointer',
+                  minWidth: 44, minHeight: 44, flexShrink: 0, background: 'none', border: 'none', cursor: 'pointer',
                   color: '#6060a0', fontSize: '1.1rem', lineHeight: 1, padding: 0,
                 }}
               >
@@ -127,6 +126,7 @@ export default function LibraryClient({ prompts = [] }: Props) {
               return (
                 <button
                   key={cat}
+                  aria-pressed={active}
                   onClick={() => handleCategoryClick(cat)}
                   style={{
                     padding: '6px 18px', borderRadius: 50, fontSize: '0.82rem',
@@ -149,9 +149,9 @@ export default function LibraryClient({ prompts = [] }: Props) {
 
       {/* Results */}
       {filtered.length === 0 ? (
-        <div style={{ textAlign: 'center', padding: '80px 0', color: '#4444668' }}>
+        <div style={{ textAlign: 'center', padding: '80px 0', color: '#9090b8' }}>
           <div style={{ fontSize: '3rem', marginBottom: 16 }}>✦</div>
-          <p style={{ fontSize: '1.1rem', color: '#5555808' }}>No prompts found. Try adjusting your search.</p>
+          <p style={{ fontSize: '1.1rem', color: '#9090b8' }}>No prompts found. Try adjusting your search.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

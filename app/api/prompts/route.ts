@@ -1,6 +1,7 @@
 // app/api/prompts/route.ts
 import { NextResponse } from 'next/server';
 import { supabaseAdmin } from '@/lib/supabaseAdmin';
+import { revalidatePath } from 'next/cache';
 
 // Admin passcode – fallback to dev default if not set
 const ADMIN_PASSCODE = process.env.ADMIN_PASSCODE ?? 'admin123';
@@ -55,6 +56,9 @@ export async function POST(request: Request) {
       );
     }
 
+    revalidatePath('/');
+    revalidatePath('/library');
+    revalidatePath('/sitemap.xml');
     return NextResponse.json({ success: true, data });
   } catch (err) {
     console.error('Unexpected error in create prompt API:', err);

@@ -25,6 +25,37 @@ html {
   scroll-behavior: smooth;
 }
 
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 2px solid #67e8f9 !important;
+  outline-offset: 4px;
+}
+
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 8px;
+  z-index: 200;
+  padding: 12px 20px;
+  background: #0e0e1f;
+  color: #f0f0ff;
+  transform: translateY(-150%);
+}
+.skip-link:focus { transform: translateY(0); }
+.card-link::after { content: ''; position: absolute; inset: 0; }
+.hero-search:focus-within {
+  border-color: rgba(139,92,246,0.6) !important;
+  box-shadow: 0 0 32px rgba(139,92,246,0.2) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 body {
   background: var(--background);
   color: var(--foreground);

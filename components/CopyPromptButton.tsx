@@ -29,6 +29,7 @@ export default function CopyPromptButton({ text }: Props) {
         border: `1px solid ${copied ? 'rgba(6,182,212,0.35)' : 'rgba(139,92,246,0.25)'}`,
         color: copied ? '#67e8f9' : '#a78bfa',
         borderRadius: 8, padding: '6px 14px',
+        minHeight: 44,
         fontSize: '0.82rem', fontWeight: 600, cursor: 'pointer',
         fontFamily: 'inherit', transition: 'all 0.2s ease',
       }}

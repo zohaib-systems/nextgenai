@@ -1,3 +1,6 @@
+import type { Metadata } from "next";
+export const revalidate = 300;
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 import HeroSection from '@/components/HeroSection';
 import PromptCard from '@/components/PromptCard';
 import ExploreCTA from '@/components/ExploreCTA';
@@ -35,7 +38,7 @@ export default async function Home() {
         </div>
 
         {prompts.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#5555808', padding: '60px 0' }}>
+          <p style={{ textAlign: 'center', color: '#9090b8', padding: '60px 0' }}>
             No prompts found yet. Check back soon!
           </p>
         ) : (

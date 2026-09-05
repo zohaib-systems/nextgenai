@@ -75,6 +75,8 @@ export default function Navbar() {
           className="md:hidden flex items-center justify-center p-2 text-[#8888b0] hover:text-[#c4b5fd] focus:outline-none min-w-[44px] min-h-[44px]"
           onClick={() => setIsOpen(!isOpen)}
           aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
+          aria-controls="mobile-navigation"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
@@ -82,7 +84,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       {isOpen && (
-        <div className="md:hidden border-t border-violet-500/10 bg-[#06060f]/95 backdrop-blur-xl">
+        <div id="mobile-navigation" className="md:hidden border-t border-violet-500/10 bg-[#06060f]/95 backdrop-blur-xl">
           <div className="flex flex-col px-4 py-4 space-y-2">
             {[
               { label: 'Home', href: '/' },

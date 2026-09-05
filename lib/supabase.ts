@@ -1,3 +1,5 @@
+import 'server-only';
+import { cache } from 'react';
 import { createClient } from '@supabase/supabase-js';
 
 export const supabase = createClient(
@@ -24,7 +26,7 @@ export const getLatestPrompts = async (limit = 6): Promise<Prompt[]> => {
     .limit(limit);
   if (error) {
     console.error('Supabase getLatestPrompts error:', error);
-    return [];
+    throw new Error('Unable to load recent prompts');
   }
   return data ?? [];
 };
@@ -33,7 +35,7 @@ export const getAllPrompts = async (): Promise<Prompt[]> => {
   const { data, error } = await supabase.from('prompts').select('*');
   if (error) {
     console.error('Supabase getAllPrompts error:', error);
-    return [];
+    throw new Error('Unable to load the prompt library');
   }
   return data ?? [];
 };
@@ -50,7 +52,7 @@ export const searchPrompts = async (query: string): Promise<Prompt[]> => {
   return data ?? [];
 };
 
-export const getPromptById = async (id: string): Promise<Prompt | null> => {
+export const getPromptById = cache(async (id: string): Promise<Prompt | null> => {
   const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
   if (!uuidRegex.test(id)) {
     console.warn('Invalid UUID for getPromptById:', id);
@@ -63,7 +65,7 @@ export const getPromptById = async (id: string): Promise<Prompt | null> => {
     .maybeSingle();
   if (error) {
     console.error('Supabase getPromptById error:', error.message);
-    return null;
+    throw new Error('Unable to load this prompt');
   }
   return data ?? null;
-};
+});

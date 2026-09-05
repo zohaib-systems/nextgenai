@@ -39,11 +39,11 @@ export default function ExploreCTA() {
         }}>
           Ready to explore more?
         </h2>
-        <p style={{ color: '#7070a0', marginBottom: 32, fontSize: '1rem', lineHeight: 1.65 }}>
+        <p style={{ color: '#9696b8', marginBottom: 32, fontSize: '1rem', lineHeight: 1.65 }}>
           Browse our entire collection of hand-picked AI prompts across writing, coding, marketing, and more.
         </p>
-        <Link href="/library" style={{ textDecoration: 'none' }}>
-          <button className="explore-button" style={{
+        <Link href="/library" className="explore-button" style={{
+            display: 'inline-block', textDecoration: 'none',
             background: 'linear-gradient(135deg, #7c3aed, #8b5cf6, #06b6d4)',
             color: '#fff', border: 'none', borderRadius: 50,
             padding: '14px 40px', fontWeight: 700, fontSize: '1rem',
@@ -53,7 +53,6 @@ export default function ExploreCTA() {
           }}
           >
             Explore Full Library →
-          </button>
         </Link>
       </div>
     </section>

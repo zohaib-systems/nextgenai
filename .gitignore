@@ -13,6 +13,17 @@
 # testing
 /coverage
 
+# local browser profiles and generated performance reports
+/.audit-chrome/
+/audit-*.json
+/audit-*.html
+/.lighthouseci/
+/*.report.html
+/*.report.json
+
+# local tool caches
+/.eslintcache
+
 # next.js
 /.next/
 /out/
@@ -22,6 +33,11 @@
 
 # misc
 .DS_Store
+Thumbs.db
+Desktop.ini
+*.swp
+*.swo
+.audit-chrome
 *.pem
 
 # debug
@@ -32,7 +48,6 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
-.env.local
 env.example
 env.local
 
