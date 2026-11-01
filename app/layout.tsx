@@ -12,6 +12,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  verification: {
+    google: "YBuIeT_XpbVV8w86bjuMQD0DdqbN79qMOjbk_cCbAfI",
+  }, 
   title: "NextGenAI – Prompt Library",
   description: "Browse, copy, and share the best AI prompts curated for creators, developers, and marketers.",
   authors: [{ name: "NextGenAI Team" }],
